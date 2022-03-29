@@ -1,11 +1,14 @@
 const express = require('express');
-
+const gpsRoute=require('./routes/gpsdata')
 const mongoose = require('mongoose');
-
 const app=express();
 require('dotenv').config();
-const PORT = process.env.PORT || 4000;
 
+const PORT = process.env.PORT || 4000;
+app.use(express.json());
+app.use(express.urlencoded({ extended:true}));
+
+app.use('/api/gpsdata',gpsRoute);
 mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true}).then(() =>{
     console.log('Connected to mongodb atlas');
 }).catch(err => {
